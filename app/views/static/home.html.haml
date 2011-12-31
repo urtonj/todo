@@ -1,0 +1,16 @@
+%p{:id => "date_header"}= Date.today().strftime("%B %d (%A)")
+
+#add_task Add Task
+
+#task_area
+    %ul{:id => "sortable"}
+        - @tasks.each do |task|
+            %li{:class => "task"}
+                = check_box task, :completed, :class => "task_checkbox"
+                = best_in_place task, :name, :type => :input#, :inner_class => "task"
+
+#template
+    %li{:id => "task_template", :class => "task"}
+        = check_box nil, nil
+        = text_field nil, nil
+        / # = best_in_place nil, nil, :type => :input, :inner_class => "task"   
