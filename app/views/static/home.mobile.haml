@@ -1,0 +1,7 @@
+Placeholder for mobile!
+
+/ - @tasks.each do |task|
+/ 	%li{:id => "task_#{task.id}", :class => "task", :task_id => task.id}
+/ 		= check_box task, :completed, :class => "task_checkbox"
+/ 		= best_in_place task, :name, :type => :input, :task_id => task.id
+/ 		= label nil, "X", :class => "delete_label", :task_id => task.id

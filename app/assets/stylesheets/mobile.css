@@ -1,0 +1,64 @@
+// Place all the styles related to the static controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#template {
+    display: none;
+}
+
+#date_header {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#add_task {
+    text-align: center;   
+}
+
+#task_area {
+    margin: 50px 180px 20px 180px;
+}
+
+.task_checkbox {
+    display: inline; 
+    margin: 0px 15px 0px 0px;
+}
+
+.task {
+    font-size: 18px;
+    background: #F9F9F9;
+    color: black;
+    opacity: .9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -khtml-border-radius: 20px;
+    border-radius: 20px; 
+    -moz-box-shadow: 4px 4px 10px 1px #ccc;
+    -webkit-box-shadow: 4px 4px 10px 1px #ccc;
+    box-shadow: 4px 4px 10px 1px #ccc;     
+} 
+
+
+.delete_label {
+    float: right;
+    padding: 0px 8px 0px 0px;
+}
+
+#sortable { 
+    list-style-type: none; 
+    margin: 0; 
+    padding: 0; 
+    width: 100%; 
+}
+
+#sortable li { 
+    margin: 0 3px 3px 3px; 
+    padding: 0.4em; 
+    padding-left: 1.5em; 
+    font-size: 1.4em; 
+    height: 18px; 
+}
