@@ -1,7 +1,3 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
-
 class Builder
     constructor: ->
         $(".best_in_place").best_in_place()
@@ -42,8 +38,11 @@ class Task
                     @addListeners(task)
                     $(task).find(".best_in_place").trigger("click") 
                     $(task).find("input").last().focus()
+                    $(task).hover(
+                        () -> $(task).css("background", "#F4F4F4"), 
+                        () -> $(task).css("background", "#F9F9F9")
+                    )                    
     addListeners: (task) ->
-
         $(task).find(".delete_label").on "click", (e) => 
             $.ajax
                 url: "/tasks/#{$(task).attr "task_id"}"
@@ -53,23 +52,20 @@ class Task
         $(task).find(".task_checkbox").on "click", (e) ->
             task_area = $(task).find(".best_in_place")
             if task_area.css("text-decoration") == "none"
+                $(task_area).css("text-decoration", "line-through")
                 task_data = 
                     "task_id": $(e.srcElement).parent().attr "task_id"
                     "completed": true                
-                $.ajax
-                    url: "/tasks/update_completed"
-                    type: "POST"
-                    data: task_data
-                $(task_area).css("text-decoration", "line-through")
             else 
+                $(task_area).css("text-decoration", "none")
                 task_data = 
                     "task_id": $(e.srcElement).parent().attr "task_id"
                     "completed": false                
-                $.ajax
-                    url: "/tasks/update_completed"
-                    type: "POST"            
-                    data: task_data
-                $(task_area).css("text-decoration", "none")
+            $.ajax
+                url: "/tasks/update_completed"
+                type: "POST"            
+                data: task_data
+            
 
 $ -> new Builder
     

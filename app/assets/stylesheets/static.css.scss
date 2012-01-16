@@ -29,6 +29,9 @@
     background: #F9F9F9;
     color: black;
     opacity: .9;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
     -moz-border-radius: 20px;
     -webkit-border-radius: 20px;
     -khtml-border-radius: 20px;
@@ -37,6 +40,7 @@
     -webkit-box-shadow: 4px 4px 10px 1px #ccc;
     box-shadow: 4px 4px 10px 1px #ccc;     
 } 
+
 
 .delete_label {
     float: right;
