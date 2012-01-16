@@ -43,11 +43,12 @@ class Task
                     $(task).find(".best_in_place").trigger("click") 
                     $(task).find("input").last().focus()
     addListeners: (task) ->
+
         $(task).find(".delete_label").on "click", (e) => 
             $.ajax
-                url: "/tasks/#{$(e.srcElement).attr "task_id"}"
+                url: "/tasks/#{$(task).attr "task_id"}"
                 type: "DELETE"
-                success: () => $(e.srcElement).parent().hide()
+                success: () => $(task).hide()
         $(task).on "keydown", (e) -> if e.keyCode == 9 then new Task
         $(task).find(".task_checkbox").on "click", (e) ->
             task_area = $(task).find(".best_in_place")
