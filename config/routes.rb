@@ -2,6 +2,9 @@ Todo::Application.routes.draw do
   resources :tasks
 
   root :to => "static#home"
+
+  match "tasks/sort" => "tasks#sort"
+  match "tasks/update_completed" => "tasks#update_completed"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

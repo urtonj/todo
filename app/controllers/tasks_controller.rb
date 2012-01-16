@@ -2,8 +2,9 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all
-
+    puts "bro"
+    @tasks = Task.all(:order => "position")
+    puts "suuuuppppp  bro"
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @tasks }
@@ -40,10 +41,8 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
-    # puts "brot"
-    # render :nothing => true
-    puts params
     @task = Task.new(params[:task])
+    @task.position = params[:position]
     render :json => @task.id if @task.save   
 
     # respond_to do |format|
@@ -84,4 +83,22 @@ class TasksController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  def sort
+    params["task_list"].each_with_index do |task, i|
+      Task.find(task.split("_")[1]).update_attribute "position", i + 1
+    end
+    render :nothing => true
+  end
+
+  def update_completed
+    if params[:completed] == "true"
+      Task.find(params[:task_id]).update_attribute "completed_at", Time.now
+    else
+      puts "bz"
+      Task.find(params[:task_id]).update_attribute "completed_at", nil
+    end
+    render :nothing => true
+  end
+
 end

@@ -4,13 +4,12 @@
 
 #task_area
     %ul{:id => "sortable"}
-        - @tasks.each do |task|
-            %li{:class => "task"}
+        - @tasks.each do |task|  
+            %li{:id => "task_#{task.id}", :class => "task", :task_id => task.id}
                 = check_box task, :completed, :class => "task_checkbox"
-                = best_in_place task, :name, :type => :input#, :inner_class => "task"
+                = best_in_place task, :name, :type => :input, :task_id => task.id
 
 #template
     %li{:id => "task_template", :class => "task"}
-        = check_box nil, nil
-        = text_field nil, nil
-        / # = best_in_place nil, nil, :type => :input, :inner_class => "task"   
+        = check_box nil, nil, :class => "task_checkbox"
+        %span{ :class => "best_in_place", :id => "best_in_place_task_X_name", "data-url" => "/tasks/X", "data-object" => "task", "data-attribute" => "name", "data-type" => "input"}
