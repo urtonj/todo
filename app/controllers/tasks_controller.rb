@@ -2,9 +2,7 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    puts "bro"
     @tasks = Task.all(:order => "position")
-    puts "suuuuppppp  bro"
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @tasks }
@@ -92,10 +90,9 @@ class TasksController < ApplicationController
   end
 
   def update_completed
-    if params[:completed] == "true"
-      Task.find(params[:task_id]).update_attribute "completed_at", Time.now
-    else
-      puts "bz"
+    if params[:completed] == "true" 
+      Task.find(params[:task_id]).update_attribute "completed_at", Time.now 
+    else 
       Task.find(params[:task_id]).update_attribute "completed_at", nil
     end
     render :nothing => true
