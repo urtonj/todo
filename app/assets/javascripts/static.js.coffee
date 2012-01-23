@@ -16,6 +16,8 @@ class Builder
 class Task
     constructor: (task) ->
         if task
+            if $(task).find(".task_checkbox").attr "checked"
+                $(task).find(".best_in_place").css("text-decoration", "line-through")
             $(task).hover(
                 () -> $(task).css("background", "#F4F4F4"), 
                 () -> $(task).css("background", "#F9F9F9")

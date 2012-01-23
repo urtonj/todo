@@ -5,10 +5,16 @@
 #task_area
     %ul{:id => "sortable"}
         - @tasks.each do |task|  
-            %li{:id => "task_#{task.id}", :class => "task", :task_id => task.id}
-                = check_box task, :completed, :class => "task_checkbox"
-                = best_in_place task, :name, :type => :input, :task_id => task.id
-                = label nil, "X", :class => "delete_label", :task_id => task.id
+            - if task.completed_at
+                %li{:id => "task_#{task.id}", :class => "task", :task_id => task.id}
+                    = check_box task, :completed, :class => "task_checkbox", :checked => "checked"
+                    = best_in_place task, :name, :type => :input, :task_id => task.id, :style => "text-decoration: line-through;"
+                    = label nil, "X", :class => "delete_label", :task_id => task.id
+            -else 
+                %li{:id => "task_#{task.id}", :class => "task", :task_id => task.id}
+                    = check_box task, :completed, :class => "task_checkbox"
+                    = best_in_place task, :name, :type => :input, :task_id => task.id
+                    = label nil, "X", :class => "delete_label", :task_id => task.id                
 
 #template
     %li{:id => "task_template", :class => "task"}
