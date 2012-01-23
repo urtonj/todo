@@ -9,6 +9,13 @@ class Builder
                     type: "POST"
                     data: task_data
         })
+        $("#sortable").bind "update", () -> 
+            task_data = "task_list" : $("#sortable").sortable('toArray')           
+            $.ajax
+                url: "/tasks/sort"
+                type: "POST"
+                data: task_data
+        $("#sortable").sortable().trigger("sortupdate")
         $("#add_task").on "click", () -> new Task
         for task in $("#task_area").find(".task")
             new Task task              
@@ -34,7 +41,7 @@ class Task
                     $(task).find("span").attr "id", "best_in_place_task_#{e}_name"
                     $(task).attr("id", "task_#{e}")
                     $(task).attr("task_id", e)
-                    task.appendTo $("#sortable")
+                    $("#sortable").prepend task
                     $(".best_in_place").best_in_place()
                     $($(task).find(".best_in_place")[0]).text("new task")
                     @addListeners(task)
@@ -49,11 +56,18 @@ class Task
             $.ajax
                 url: "/tasks/#{$(task).attr "task_id"}"
                 type: "DELETE"
-                success: () => $(task).hide()
+                success: () => $(task).fadeOut(500)
         $(task).on "keydown", (e) -> if e.keyCode == 9 then new Task
         $(task).find(".task_checkbox").on "click", (e) ->
             task_area = $(task).find(".best_in_place")
             if task_area.css("text-decoration") == "none"
+                sourceTask = $(e.srcElement).parent("li")
+                sourceTask.fadeOut(500, () ->
+                    $("#sortable").append sourceTask
+                    sourceTask.fadeIn(500, () -> 
+                        $("#sortable").trigger("update")
+                    )
+                )
                 $(task_area).css("text-decoration", "line-through")
                 task_data = 
                     "task_id": $(e.srcElement).parent().attr "task_id"
