@@ -1,6 +1,6 @@
-%p{:id => "date_header"}= Date.today().strftime("%B %d (%A)")
-
-#add_task Add Task
+#header
+    %p{:id => "date_header"}= Date.today().strftime("%B %d (%A)")
+    #add_task Add Task
 
 #task_area
     %ul{:id => "sortable"}

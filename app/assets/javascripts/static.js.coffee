@@ -34,7 +34,7 @@ class Task
             $.ajax
                 url: "/tasks"
                 type: "POST"
-                data: "position" : $("#sortable").sortable('toArray').length + 1
+                data: "position" : 0
                 success: (e) =>
                     task = $("#task_template").clone()
                     $(task).find("span").attr "data-url", "/tasks/#{e}"
