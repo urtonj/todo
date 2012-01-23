@@ -1,7 +1,7 @@
 class StaticController < ApplicationController
     def home
-    	#{Date.yesterday.to_formatted_s(:db)}
-        @tasks = Task.where("to_timestamp(completed_at) > #{Date.yesterday} or completed_at is null").order("position")
+    	time = Date.yesterday
+        @tasks = Task.where("completed_at > :time or completed_at is null", :time => time).order("position")
         render "home"
     end
 end
