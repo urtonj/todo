@@ -98,4 +98,16 @@ class TasksController < ApplicationController
     render :nothing => true
   end
 
+  def get_tasks_completed_on_date
+    date = Date.parse(params[:date])
+    tasks = []
+    Task.all.each do |task|
+      task_date = task.completed_at.to_s.match(/[\d]+-[\d]+-[\d]+/).to_s.split "-"
+      next if task_date.blank?
+      tasks << task if date == Date.strptime("{ #{task_date[0]}, #{task_date[1]}, #{task_date[2]} }", "{ %Y, %m, %d }")
+    end
+    puts tasks.to_json
+    render :json => tasks
+  end
+
 end

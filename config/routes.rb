@@ -5,6 +5,7 @@ Todo::Application.routes.draw do
 
   match "tasks/sort" => "tasks#sort"
   match "tasks/update_completed" => "tasks#update_completed"
+  match "tasks/get_tasks_completed_on_date" => "tasks#get_tasks_completed_on_date"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
