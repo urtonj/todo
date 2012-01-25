@@ -52,6 +52,7 @@ class Builder
                 $("#task_area").show('slide', {direction: 'right'}, 400)
                 $("#date_header")[0].innerText = @current_date.toLocaleDateString()
 
+
 class Task
     constructor: (task) ->
         if task
@@ -120,4 +121,3 @@ class Task
             
 
 $ -> new Builder
-    
