@@ -110,4 +110,10 @@ class TasksController < ApplicationController
     render :json => tasks
   end
 
+  def get_current_tasks
+    time = Date.yesterday    
+    tasks = Task.where("completed_at > :time or completed_at is null", :time => time).order("position")
+    render :json => tasks
+  end
+
 end

@@ -1,64 +1,89 @@
-class Builder
+class List
+    list_date: null
     current_date: null
     constructor: ->
-        date = new Date()
-        @current_date = date
-        $("#date_header")[0].innerText = @current_date.toLocaleDateString()
+        self = @
+        [@list_date, @current_date] = [new Date(), new Date()]
+        for task in $("#task_area").find(".task")
+            new Task task           
+        @updateDateText(@list_date)
         $(".best_in_place").best_in_place()
         $("#sortable").sortable({
             update: () -> 
                 task_data = "task_list" : $(this).sortable('toArray')           
-                $.ajax
-                    url: "/tasks/sort"
-                    type: "POST"
-                    data: task_data
+                self.updateListOrder(task_data)
         })
         $("#sortable").bind "update", () -> 
-            task_data = "task_list" : $("#sortable").sortable('toArray')           
-            $.ajax
-                url: "/tasks/sort"
-                type: "POST"
-                data: task_data
+            task_data = "task_list" : $("#sortable").sortable('toArray')  
+            self.updateListOrder(task_data)         
         $("#sortable").sortable().trigger("sortupdate")
         $("#add_task").on "click", () -> new Task
-        for task in $("#task_area").find(".task")
-            new Task task   
         $(window).on "keyup", (e) => 
+            return if $(e.srcElement).is("input")
             if e.keyCode == 37
                 newDate = new Date()
-                newDate.setDate(@current_date.getDate() - 1)
-                @current_date = newDate
-                params = 
-                    "date": @current_date.toLocaleString()
-                $.ajax
-                    url: "tasks/get_tasks_completed_on_date"
-                    type: "POST"
-                    data: params 
-                    success: (e) -> console.log e               
-                $("#task_area").show('slide', {direction: 'left'}, 400)
-                $("#date_header")[0].innerText = @current_date.toLocaleDateString()
+                newDate.setDate(@list_date.getDate() - 1)
+                @list_date = newDate
+                @changeDate("left")
             else if e.keyCode == 39
                 newDate = new Date()
-                newDate.setDate(@current_date.getDate() + 1)
-                @current_date = newDate
-                params = 
-                    "date": @current_date.toLocaleString()
-                $.ajax
-                    url: "tasks/get_tasks_completed_on_date"
-                    type: "POST"
-                    data: params 
-                    success: (e) -> console.log e                 
-                $("#task_area").show('slide', {direction: 'right'}, 400)
-                $("#date_header")[0].innerText = @current_date.toLocaleDateString()
+                newDate.setDate(@list_date.getDate() + 1)
+                @list_date = newDate
+                @changeDate("right")
+    updateListOrder: (list) =>
+        $.ajax
+            url: "/tasks/sort"
+            type: "POST"
+            data: list
+    updateDateText: (text) => 
+        $("#date_header")[0].innerText = text.toLocaleDateString()
+    changeDate: (direction) =>
+        if @current_date.getDate() == @list_date.getDate()
+            $.ajax
+                url: "tasks/get_current_tasks"
+                type: "GET"
+                success: (e) =>
+                    @updateList(e)
+        else
+            params = 
+                "date": @list_date.toLocaleString()
+            $.ajax
+                url: "tasks/get_tasks_completed_on_date"
+                type: "POST"
+                data: params 
+                success: (e) => 
+                    @updateList(e)
+            $("#date_header")[0].innerText = @list_date.toLocaleDateString()
+    updateList: (list) => 
+        @clearList()
+        @populateList(list)
+    clearList: () =>
+        $("#sortable").find("li").fadeOut(150)
+    populateList: (list) =>
+        for task in list
+            new Task task.name, task.id, task.completed_at
 
 
 class Task
-    constructor: (task) ->
-        if task
+    constructor: (task, id, completed) ->
+        if typeof(task) == "object"
             if $(task).find(".task_checkbox").attr "checked"
                 $(task).find(".best_in_place").css("text-decoration", "line-through")
             @addListeners(task)
-        else
+        else if typeof(task) == "string"
+            new_task = $($("#task_template").clone())
+            new_task.hide()
+            new_task.find("span").attr "data-url", "/tasks/#{id}"
+            new_task.attr("id", "task_#{id}")
+            new_task.attr("task_id", id)
+            $("#sortable").prepend new_task
+            $(".best_in_place").best_in_place()
+            $(new_task.find(".best_in_place")[0]).text(task)
+            @addListeners(new_task)
+            new_task.find(".best_in_place").css("text-decoration", "line-through") if completed
+            $(new_task).find(".task_checkbox").attr "checked", "checked" if completed
+            $(new_task).fadeIn(150)
+        else if typeof(task) == "undefined"
             $.ajax
                 url: "/tasks"
                 type: "POST"
@@ -120,4 +145,4 @@ class Task
                 data: task_data
             
 
-$ -> new Builder
+$ -> new List
