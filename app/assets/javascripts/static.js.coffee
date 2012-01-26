@@ -25,7 +25,6 @@ class Builder
             new Task task   
         $(window).on "keyup", (e) => 
             if e.keyCode == 37
-
                 newDate = new Date()
                 newDate.setDate(@current_date.getDate() - 1)
                 @current_date = newDate
@@ -77,14 +76,15 @@ class Task
                     $(task).find(".best_in_place").trigger("click") 
                     $(task).find("input").last().focus()
     addListeners: (task) ->
-        $(task).on "dblclick", (e) -> 
-            sourceTask = $(e.srcElement)
-            sourceTask.fadeOut(300, () ->
-                $("#sortable").prepend sourceTask
-                sourceTask.fadeIn(300, () ->
-                    $("#sortable").trigger "update"
+        $(task).on "dblclick", (e) ->
+            if $(e.srcElement).is("li")
+                sourceTask = $(e.srcElement)
+                sourceTask.fadeOut(300, () ->
+                    $("#sortable").prepend sourceTask
+                    sourceTask.fadeIn(300, () ->
+                        $("#sortable").trigger "update"
+                    )
                 )
-            )
         $(task).hover(
             () -> $(task).css("background", "#F4F4F4"), 
             () -> $(task).css("background", "#F9F9F9")
