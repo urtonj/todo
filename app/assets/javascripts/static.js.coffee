@@ -57,8 +57,8 @@ class List
     updateList: (list) => 
         @clearList()
         @populateList(list)
-    clearList: () =>
-        $("#sortable").find("li").fadeOut(150)
+    clearList: () => 
+        $("#sortable").find("li").hide()#fadeOut(150)
     populateList: (list) =>
         for task in list
             new Task task.name, task.id, task.completed_at
