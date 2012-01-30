@@ -21,14 +21,10 @@ class List
         $(window).on "keyup", (e) => 
             return if $(e.srcElement).is("input")
             if e.keyCode == 37
-                newDate = new Date()
-                newDate.setDate(@list_date.getDate() - 1)
-                @list_date = newDate
+                @list_date.setDate(@list_date.getDate() - 1)
                 @changeDate("left")
             else if e.keyCode == 39
-                newDate = new Date()
-                newDate.setDate(@list_date.getDate() + 1)
-                @list_date = newDate
+                @list_date.setDate(@list_date.getDate() + 1)
                 @changeDate("right")
     updateListOrder: (list) =>
         $.ajax
@@ -54,7 +50,6 @@ class List
                 success: (e) => 
                     @updateList(e)
         @updateDateText(@list_date)
-        # $("#date_header")[0].innerText = @list_date.toLocaleDateString()
     updateList: (list) => 
         @clearList()
         @populateList(list)
