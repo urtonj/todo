@@ -53,7 +53,8 @@ class List
                 data: params 
                 success: (e) => 
                     @updateList(e)
-            $("#date_header")[0].innerText = @list_date.toLocaleDateString()
+        @updateDateText(@list_date)
+        # $("#date_header")[0].innerText = @list_date.toLocaleDateString()
     updateList: (list) => 
         @clearList()
         @populateList(list)
