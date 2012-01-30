@@ -56,6 +56,7 @@ class List
     clearList: () => 
         $("#sortable").find("li").hide()#fadeOut(150)
     populateList: (list) =>
+        console.log list
         for task in list
             new Task task.name, task.id, task.completed_at
 
@@ -72,7 +73,8 @@ class Task
             new_task.find("span").attr "data-url", "/tasks/#{id}"
             new_task.attr("id", "task_#{id}")
             new_task.attr("task_id", id)
-            $("#sortable").prepend new_task
+            new_task.appendTo $("#sortable")
+            # $("#sortable").prepend new_task
             $(".best_in_place").best_in_place()
             $(new_task.find(".best_in_place")[0]).text(task)
             @addListeners(new_task)
