@@ -71,10 +71,10 @@ class Task
             new_task = $($("#task_template").clone())
             new_task.hide()
             new_task.find("span").attr "data-url", "/tasks/#{id}"
+            new_task.find("span").attr "data-inner-class", "task_input"
             new_task.attr("id", "task_#{id}")
             new_task.attr("task_id", id)
             new_task.appendTo $("#sortable")
-            # $("#sortable").prepend new_task
             $(".best_in_place").best_in_place()
             $(new_task.find(".best_in_place")[0]).text(task)
             @addListeners(new_task)
@@ -90,6 +90,7 @@ class Task
                     task = $("#task_template").clone()
                     $(task).find("span").attr "data-url", "/tasks/#{e}"
                     $(task).find("span").attr "id", "best_in_place_task_#{e}_name"
+                    $(task).find("span").attr "data-inner-class", "task_input"         
                     $(task).attr("id", "task_#{e}")
                     $(task).attr("task_id", e)
                     $("#sortable").prepend task
@@ -98,6 +99,8 @@ class Task
                     @addListeners(task)
                     $(task).find(".best_in_place").trigger("click") 
                     $(task).find("input").last().focus()
+    create_task: (task) =>
+        console.log "create!"
     addListeners: (task) ->
         $(task).on "dblclick", (e) ->
             if $(e.srcElement).is("li")
