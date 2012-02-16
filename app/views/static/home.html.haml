@@ -6,6 +6,7 @@
 #task_area
     %ul{:id => "sortable"}
         - @tasks.each do |task|  
+            - puts task.to_json
             %li{:id => "task_#{task.id}", :class => "task", :task_id => task.id}
                 - if task.completed_at
                     = check_box task, :completed, :class => "task_checkbox", :checked => "checked"
