@@ -8,6 +8,7 @@
         - @tasks.each do |task|  
             - puts task.to_json
             %li{:id => "task_#{task.id}", :class => "task", :task_id => task.id}
+                / #task_container
                 - if task.completed_at
                     = check_box task, :completed, :class => "task_checkbox", :checked => "checked"
                     = best_in_place task, :name, :type => :input, :task_id => task.id, :style => "text-decoration: line-through;", :inner_class => "task_input"

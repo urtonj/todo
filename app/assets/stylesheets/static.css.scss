@@ -33,7 +33,8 @@
 }
 
 #task_area {
-    margin: 120px 180px 20px 180px;
+    width: 85%;
+    margin: 120px auto 20px auto;
 }
 
 .task_checkbox {
@@ -41,6 +42,7 @@
     margin: 0px 15px 0px 0px;
     position: relative;
     bottom: 2px;
+    cursor: pointer;
 }
 
 .task {
@@ -68,6 +70,7 @@
 .delete_label {
     float: right;
     padding: 0px 8px 0px 0px;
+    cursor: pointer;
 }
 
 #sortable { 
