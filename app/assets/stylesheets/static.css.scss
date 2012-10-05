@@ -3,15 +3,13 @@
 }
 
 #header {
-    background-color: #EDEDED;
+    background: #EDEDED url(straws.png); 
     height: 80px;
     width: 100%;
     top: 0px;    
     left: 0px;
     position: absolute;
-    -moz-box-shadow: 4px 4px 10px 1px #bbb;
-    -webkit-box-shadow: 4px 4px 10px 1px #bbb;
-    box-shadow: 4px 4px 10px 1px #bbb;      
+    box-shadow: 1px 1px 4px 1px #BBB;     
 }
 
 #date_header {
@@ -47,19 +45,17 @@
 
 .task {
     font-size: 18px;
-    background: #F9F9F9;
+    background: white;
     color: black;
-    opacity: .9;
+    opacity: 1;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; 
-    -moz-border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -khtml-border-radius: 20px;
-    border-radius: 20px; 
-    -moz-box-shadow: 4px 4px 10px 1px #ccc;
-    -webkit-box-shadow: 4px 4px 10px 1px #ccc;
-    box-shadow: 4px 4px 10px 1px #ccc;     
+    border-radius: 15px; 
+    border: 1px solid #ddd;
+    /*-moz-box-shadow: 4px 4px 10px 1px #ccc;*/
+    /*-webkit-box-shadow: 4px 4px 10px 1px #ccc;*/
+    /*box-shadow: 4px 4px 10px 1px #ccc;     */
 } 
 
 .task_input {

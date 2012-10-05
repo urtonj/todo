@@ -1,7 +1,24 @@
-Placeholder for mobile!
+#header
+  %p{:id => "date_header"}
+  #add_task Add Task
 
-/ - @tasks.each do |task|
-/ 	%li{:id => "task_#{task.id}", :class => "task", :task_id => task.id}
-/ 		= check_box task, :completed, :class => "task_checkbox"
-/ 		= best_in_place task, :name, :type => :input, :task_id => task.id
-/ 		= label nil, "X", :class => "delete_label", :task_id => task.id
+#task_area
+  %ul{:id => "sortable"}
+    - if @tasks.empty?
+      %p No tasks recorded on this day.
+    - else
+      - @tasks.each do |task|  
+        %li{:id => "task_#{task.id}", :class => "task", :task_id => task.id}
+          - if task.completed_at
+            = check_box task, :completed, :class => "task_checkbox", :checked => "checked"
+            = best_in_place task, :name, :type => :input, :task_id => task.id, :style => "text-decoration: line-through;", :inner_class => "task_input"
+          -else 
+            = check_box task, :completed, :class => "task_checkbox"
+            = best_in_place task, :name, :type => :input, :task_id => task.id, :inner_class => "task_input"
+          = label nil, "X", :class => "delete_label", :task_id => task.id
+
+#template
+  %li{:id => "task_template", :class => "task"}
+    = check_box nil, nil, :class => "task_checkbox"
+    %span{ :class => "best_in_place", :id => "best_in_place_task_X_name", "data-url" => "/tasks/X", "data-object" => "task", "data-attribute" => "name", "data-type" => "input"}
+    = label nil, "X", :class => "delete_label", :task_id => ""#task.id

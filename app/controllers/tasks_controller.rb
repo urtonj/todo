@@ -100,21 +100,13 @@ class TasksController < ApplicationController
   end
 
   def get_tasks_completed_on_date
-    date = Date.parse(params[:date])
-    tasks = []
-    Task.all.each do |task|
-      task_date = task.completed_at.to_s.match(/[\d]+-[\d]+-[\d]+/).to_s.split "-"
-      next if task_date.blank?
-      tasks << task if date == Date.strptime("{ #{task_date[0]}, #{task_date[1]}, #{task_date[2]} }", "{ %Y, %m, %d }")
-    end
-    puts tasks.to_json
-    render :json => tasks
+    date = Date.parse(params[:date]).to_date
+    @tasks = Task.where("completed_at > ? and completed_at < ?", date.beginning_of_day, date.end_of_day)
+    render :partial => "list"
   end
 
-  def get_current_tasks
-    time = Date.yesterday    
-    tasks = Task.where("completed_at > :time or completed_at is null", :time => time).order("position")
-    render :json => tasks
+  def get_current_tasks    
+    render :json => Task.where("completed_at > ? or completed_at is null", Date.today.beginning_of_day).order(:position)
   end
 
 end
