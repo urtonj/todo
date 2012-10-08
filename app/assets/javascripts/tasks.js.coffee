@@ -8,7 +8,7 @@ class List
     constructor: ->
         self = @
         [@list_date, @current_date] = [new Date(), new Date()]
-        # new Task task for task in $("#task_area").find(".task")      
+        new Task task for task in $("#task_area").find(".task")      
         @updateDateText(@list_date)
         $(".best_in_place").best_in_place()
         $("#sortable").sortable({
@@ -100,6 +100,7 @@ class Task
     create_task: (task) =>
         console.log "create!"
     addListeners: (task) ->
+        console.log task
         $(task).on "dblclick", (e) ->
             if $(e.srcElement).is("li")
                 sourceTask = $(e.srcElement)
