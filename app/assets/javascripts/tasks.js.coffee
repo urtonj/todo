@@ -118,7 +118,7 @@ class Task
             $.ajax
                 url: "/tasks/#{$(task).attr "task_id"}"
                 type: "DELETE"
-                success: () => $(task).fadeOut(500)
+                success: () => $(task).fadeOut(500, => $(task).remove())
         $(task).on "keydown", (e) -> if e.keyCode == 9 then new Task
         $(task).find(".task_checkbox").on "click", (e) ->
             task_area = $(task).find(".best_in_place")
