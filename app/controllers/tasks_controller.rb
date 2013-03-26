@@ -1,4 +1,8 @@
 class TasksController < ApplicationController
+  def all
+    render :json => Task.all
+  end
+
   # GET /tasks
   # GET /tasks.json
   def index
